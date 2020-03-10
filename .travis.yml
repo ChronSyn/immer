@@ -1,9 +1,23 @@
 language: node_js
 node_js:
-  - "8"
+  - "10.18.1"
+  # - "node"
 env:
   - NODE_ENV=TEST
 cache:
-  directories:
-    - "node_modules"
-script: yarn coveralls && yarn test:flow
+  yarn: true
+#  directories:
+#    - "node_modules"
+before_script:
+  - yarn global add if-node-version
+script:
+  - yarn build || travis_terminate 1
+  - if-node-version 10 || { yarn test && travis_terminate 0; }
+  - yarn coveralls
+jobs:
+  include:
+    - stage: deploy
+      if: branch == master && !fork
+      script:
+        - NODE_ENV= yarn build
+        - yarn semantic-release

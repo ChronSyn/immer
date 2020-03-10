@@ -5,14 +5,15 @@
   "requirePragma": false,
   "semi": false,
   "singleQuote": false,
-  "tabWidth": 4,
   "trailingComma": "none",
-  "useTabs": false,
+  "useTabs": true,
   "overrides": [
     {
-      "files": "*.json",
+      "files": [".prettierrc", "*.json"],
       "options": {
-        "printWidth": 200
+        "printWidth": 200,
+        "tabWidth": 2,
+        "useTabs": false
       }
     }
   ]
